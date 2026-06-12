@@ -1,0 +1,65 @@
+/* ============================================================
+   BusTech · DEMO 01 — Animations
+   IMPORTANT: content is VISIBLE by default. The hidden→shown
+   entrance states only apply when <html class="anim-ready">
+   (added by JS) AND the user allows motion. So any frozen-
+   timeline context (screenshots, PDF, throttled iframes) and
+   reduced-motion users always see fully-rendered content.
+   ============================================================ */
+
+@keyframes bw-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes bw-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bw-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes bw-spin { to { transform: rotate(360deg); } }
+@keyframes bw-shimmer { to { background-position: -200% 0; } }
+@keyframes bw-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  60%      { opacity: 0.45; transform: scale(0.78); }
+}
+
+/* live pulse dot (decorative, safe to loop subtly) */
+.live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--full);
+  display: inline-block;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.anim-ready .live-dot { animation: bw-pulse 1.8s var(--ease-soft) infinite; }
+}
+
+.bw-spin { animation: bw-spin 0.9s linear infinite; }
+
+/* Scroll reveal — only hides when motion is allowed AND JS is live */
+@media (prefers-reduced-motion: no-preference) {
+  html.anim-ready .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+    will-change: opacity, transform;
+  }
+  html.anim-ready .reveal.is-in { opacity: 1; transform: none; }
+  html.anim-ready .reveal[data-delay="1"] { transition-delay: 60ms; }
+  html.anim-ready .reveal[data-delay="2"] { transition-delay: 120ms; }
+  html.anim-ready .reveal[data-delay="3"] { transition-delay: 180ms; }
+  html.anim-ready .reveal[data-delay="4"] { transition-delay: 240ms; }
+  html.anim-ready .reveal[data-delay="5"] { transition-delay: 300ms; }
+
+  /* view enter */
+  html.anim-ready .view { animation: bw-fade-up 0.5s var(--ease) both; }
+}
+
+/* skeleton shimmer */
+.skeleton {
+  border-radius: 10px;
+  background: linear-gradient(90deg,
+    rgba(150,150,170,0.10) 25%,
+    rgba(150,150,170,0.22) 50%,
+    rgba(150,150,170,0.10) 75%);
+  background-size: 200% 100%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.anim-ready .skeleton { animation: bw-shimmer 1.4s linear infinite; }
+}

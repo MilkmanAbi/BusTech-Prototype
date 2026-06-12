@@ -1,0 +1,153 @@
+/* ============================================================
+   BusTech · DEMO 01 — Design tokens
+   Calm transit companion. The wallpaper carries the colour;
+   the UI stays quiet, hairline-light, Apple-lean.
+   Themes adapt ink + glass so cards read on bright (dawn/
+   morning) and dark (dusk/night) skies alike.
+   ============================================================ */
+
+:root {
+  /* Type — system stack = SF Pro on Apple, zero load cost */
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
+
+  /* One restrained accent (iOS blue family) */
+  --accent: #0a84ff;
+  --accent-ink: #0a84ff;
+
+  /* Crowd / load — iOS semantic colours, used as small dots + text */
+  --quiet: #30d158;
+  --moderate: #ffd60a;
+  --busy: #ff9f0a;
+  --full: #ff453a;
+
+  /* Radii — softer, Apple-scale */
+  --r-xs: 10px;
+  --r-sm: 14px;
+  --r: 20px;
+  --r-lg: 24px;
+  --r-xl: 30px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.33, 0, 0.2, 1);
+  --t-fast: 160ms;
+  --t: 280ms;
+  --t-slow: 520ms;
+
+  /* Spacing */
+  --gap: 16px;
+  --pad: 22px;
+  --maxw: 1080px;
+
+  /* Defaults (overridden per theme) — bright sky baseline */
+  --ink: #1c1c2e;
+  --ink-soft: rgba(28, 28, 46, 0.62);
+  --ink-faint: rgba(28, 28, 46, 0.40);
+  --hairline: rgba(28, 28, 46, 0.10);
+
+  --glass: rgba(255, 255, 255, 0.55);
+  --glass-2: rgba(255, 255, 255, 0.40);
+  --glass-strong: rgba(255, 255, 255, 0.72);
+  --glass-edge: rgba(255, 255, 255, 0.65);
+  --surface: #ffffff;            /* opaque popover surface (dropdowns) */
+  --surface-hover: #eef1f6;
+  --glass-shadow: 0 14px 40px -20px rgba(40, 40, 80, 0.42);
+  --glass-shadow-sm: 0 8px 22px -14px rgba(40, 40, 80, 0.34);
+  --blur: 22px;
+
+  --fill: rgba(120, 120, 140, 0.10);   /* subtle control fill */
+  --fill-strong: rgba(120, 120, 140, 0.16);
+  --field: rgba(255, 255, 255, 0.6);
+
+  --accent-soft: rgba(10, 132, 255, 0.12);
+}
+
+/* ---- DAWN (03): sky-blue → peach, bright ----------------- */
+html[data-theme="dawn"] {
+  --wallpaper: url("assets/wallpapers/dawn.jpg");
+  --ink: #283349;
+  --ink-soft: rgba(40, 51, 73, 0.64);
+  --ink-faint: rgba(40, 51, 73, 0.42);
+  --hairline: rgba(40, 51, 73, 0.10);
+  --accent: #2f6fd0;
+  --accent-soft: rgba(47, 111, 208, 0.14);
+  --glass: rgba(255, 255, 255, 0.56);
+  --glass-2: rgba(255, 255, 255, 0.42);
+  --glass-strong: rgba(255, 255, 255, 0.74);
+  --glass-edge: rgba(255, 255, 255, 0.8);
+  --surface: #fbfcfe;
+  --surface-hover: #eef2f9;
+}
+
+/* ---- MORNING (02): teal → sand, bright ------------------- */
+html[data-theme="morning"] {
+  --wallpaper: url("assets/wallpapers/morning.jpg");
+  --ink: #13433d;
+  --ink-soft: rgba(19, 67, 61, 0.64);
+  --ink-faint: rgba(19, 67, 61, 0.42);
+  --hairline: rgba(19, 67, 61, 0.10);
+  --accent: #0f8a86;
+  --accent-soft: rgba(15, 138, 134, 0.14);
+  --glass: rgba(255, 255, 255, 0.52);
+  --glass-2: rgba(255, 255, 255, 0.38);
+  --glass-strong: rgba(255, 255, 255, 0.72);
+  --glass-edge: rgba(255, 255, 255, 0.8);
+  --surface: #f7fbf9;
+  --surface-hover: #eaf4f0;
+}
+
+/* ---- DUSK (01): pink → lilac, medium-dark ---------------- */
+html[data-theme="dusk"] {
+  --wallpaper: url("assets/wallpapers/dusk.jpg");
+  --ink: #ffffff;
+  --ink-soft: rgba(255, 255, 255, 0.80);
+  --ink-faint: rgba(255, 255, 255, 0.58);
+  --hairline: rgba(255, 255, 255, 0.16);
+  --accent: #ffffff;
+  --accent-ink: #fff;
+  --accent-soft: rgba(255, 255, 255, 0.18);
+  --glass: rgba(70, 40, 88, 0.26);
+  --glass-2: rgba(70, 40, 88, 0.18);
+  --glass-strong: rgba(78, 46, 96, 0.42);
+  --glass-edge: rgba(255, 255, 255, 0.34);
+  --glass-shadow: 0 18px 46px -20px rgba(50, 18, 70, 0.5);
+  --glass-shadow-sm: 0 10px 26px -16px rgba(50, 18, 70, 0.45);
+  --fill: rgba(255, 255, 255, 0.12);
+  --fill-strong: rgba(255, 255, 255, 0.18);
+  --field: rgba(255, 255, 255, 0.14);
+  --surface: #3a2350;
+  --surface-hover: #472c61;
+}
+
+/* ---- NIGHT (00): indigo → mauve, dark -------------------- */
+html[data-theme="night"] {
+  --wallpaper: url("assets/wallpapers/night.jpg");
+  --ink: #f3f1ff;
+  --ink-soft: rgba(243, 241, 255, 0.76);
+  --ink-faint: rgba(243, 241, 255, 0.52);
+  --hairline: rgba(255, 255, 255, 0.14);
+  --accent: #7aa2ff;
+  --accent-ink: #aec1ff;
+  --accent-soft: rgba(122, 162, 255, 0.16);
+  --glass: rgba(28, 28, 60, 0.34);
+  --glass-2: rgba(28, 28, 60, 0.24);
+  --glass-strong: rgba(34, 34, 70, 0.5);
+  --glass-edge: rgba(255, 255, 255, 0.26);
+  --glass-shadow: 0 20px 50px -22px rgba(8, 6, 30, 0.66);
+  --glass-shadow-sm: 0 10px 28px -16px rgba(8, 6, 30, 0.6);
+  --fill: rgba(255, 255, 255, 0.10);
+  --fill-strong: rgba(255, 255, 255, 0.16);
+  --field: rgba(255, 255, 255, 0.10);
+  --surface: #1d1d3e;
+  --surface-hover: #29294e;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
