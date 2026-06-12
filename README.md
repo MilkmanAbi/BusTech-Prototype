@@ -1,49 +1,42 @@
-# BusWatch SG 🚌
+# BusWatch SG (˶ᵔ ᵕ ᵔ˶)
 
-A calm, comfy web app for Singapore bus stops — real-time arrivals, how packed each
-bus is, neighbourhood weather, and an **on-device AI read** of how busy the platform
-looks. Frosted-glass cards float over hand-painted wave wallpapers that drift from
-dawn → morning → dusk → night with the real time of day.
+A calm web app for Singapore bus stops. Real-time arrivals, how packed each bus is, neighbourhood weather, and an on-device AI read of how busy the platform looks. Frosted-glass cards over hand-painted wave wallpapers that drift dawn -> morning -> dusk -> night with the actual time of day.
 
-Built for **BusTech SG** with plain HTML / CSS / JS (no framework), so it stays fast
-even on an old phone.
+Built for BusTech SG in plain HTML / CSS / JS, no framework, so it stays fast on an old phone.
 
 ---
 
-## ✨ Features
+## Features
 
-- **Time-of-day skies** — four wallpapers cross-fade automatically by the clock.
-- **Live arrivals as flip cards** — tap to flip for operator, vehicle type, accessibility
-  and the next few buses. The official LTA **Load** field shows seats / standing / packed.
-- **On-device crowd AI** — TensorFlow.js + COCO-SSD count people on the live camera,
-  entirely in your browser. No frame is ever uploaded.
-- **Neighbourhood weather** — live `data.gov.sg` / NEA forecasts, rainfall, PM2.5 & UV,
-  with canvas weather animations (sun rays, drifting clouds, rain, thunder, starfields).
-- **Search & nearby** — OneMap place search + browser geolocation → nearest stops.
-- **Responsive** — one column on a phone, a dashboard on a wide screen.
+- **Time-of-day skies** - four wallpapers cross-fade by the clock.
+- **Live arrivals as flip cards** - tap to flip for operator, vehicle type, accessibility, and the next few buses. LTA's Load field shows seats / standing / packed.
+- **On-device crowd AI** - TensorFlow.js + COCO-SSD count people on the live camera, all in your browser. No frame leaves the device.
+- **Neighbourhood weather** - live data.gov.sg / NEA forecasts, rainfall, PM2.5 and UV, with canvas animations (sun rays, drifting clouds, rain, thunder, starfields).
+- **Search and nearby** - OneMap place search + geolocation -> nearest stops.
+- **Responsive** - one column on a phone, a dashboard on a wide screen.
 
 ---
 
-## 🏗 Architecture
+## Architecture
 
 ```
-Static frontend (GitHub Pages, this whole app)
- ├─ TensorFlow.js  (in-browser person detection)      ← no backend
- ├─ data.gov.sg / NEA  (weather)                       ← direct, no key
- ├─ OneMap  (place search)                             ← direct, no key
- └─ Vercel function  api/lta.js  ──► LTA DataMall      ← the ONE server piece
+Static frontend (GitHub Pages, the whole app)
+ ├─ TensorFlow.js      in-browser person detection     no backend
+ ├─ data.gov.sg / NEA  weather                          direct, no key
+ ├─ OneMap             place search                     direct, no key
+ └─ Vercel function    api/lta.js  ──► LTA DataMall     the one server piece
                                        (adds AccountKey header)
 ```
 
-Everything is a static file **except** `api/lta.js`, a tiny serverless proxy that
-holds the LTA key (which DataMall requires and which can't be exposed in the browser).
+Everything's static except `api/lta.js`, a tiny serverless proxy holding the LTA key. DataMall requires it and it can't sit in the browser.
 
 ---
 
-## 🚀 Running it
+## Running it
 
 ### Frontend (local)
-Just serve the folder with any static server (modules aren't used, but `fetch` needs http):
+
+Serve the folder with any static server (`fetch` needs http):
 
 ```bash
 npx serve .
@@ -51,31 +44,26 @@ npx serve .
 python3 -m http.server 8080
 ```
 
-Open `http://localhost:8080`. The app works **immediately** — bus arrivals use a
-realistic local generator until you connect the live proxy (below). Weather, search
-and the crowd camera are already live.
+Open `http://localhost:8080`. Works immediately - arrivals use a local generator until you wire up the live proxy. Weather, search and the crowd cam are already live.
 
 ### Live LTA bus data (Vercel proxy)
-1. Push this repo to GitHub.
-2. Import it at [vercel.com](https://vercel.com) (free Hobby plan, sign in with GitHub).
-   Vercel auto-detects `/api/lta.js`.
-3. (Recommended) Add an environment variable `LTA_ACCOUNT_KEY` with your key from
-   [datamall.lta.gov.sg](https://datamall.lta.gov.sg/) — instant free sign-up.
-4. Copy your deployment URL and set it in **`js/busApi.js`**:
+
+1. Push the repo to GitHub.
+2. Import it at vercel.com (free Hobby plan, GitHub sign-in). It auto-detects `/api/lta.js`.
+3. Add env var `LTA_ACCOUNT_KEY` with your key from datamall.lta.gov.sg (free signup).
+4. Set your deployment URL in `js/busApi.js`:
    ```js
    BW.PROXY_URL = "https://<your-project>.vercel.app/api/lta";
    ```
-5. Push — GitHub Pages serves the frontend, Vercel serves the proxy, both from the
-   same repo with no conflict.
+5. Push. Pages serves the frontend, Vercel serves the proxy, same repo, no conflict.
 
 ### Crowd camera
-The **Crowd cam** page starts on a built-in *simulated* platform feed so it's alive
-in any preview. Click **Use my camera** for real TensorFlow.js detection (it lazy-loads
-a ~5 MB model the first time), or **Upload a clip** to run detection on your own video.
+
+The Crowd cam page opens on a simulated feed so it's alive in any preview. Hit **Use my camera** for real detection (lazy-loads a ~5 MB model first time), or **Upload a clip** to run it on your own video.
 
 ---
 
-## 📁 Structure
+## Structure
 
 ```
 index.html            app shell + script wiring
@@ -90,7 +78,7 @@ js/
   ui.js               shared component builders
   weather.js          live data.gov.sg / NEA
   weatherAnim.js      canvas weather scenes
-  busApi.js           LTA proxy helper (+ mock fallback)  ← set PROXY_URL here
+  busApi.js           LTA proxy helper (+ mock fallback)   set PROXY_URL here
   location.js         geolocation + OneMap search
   crowd.js            TensorFlow.js COCO-SSD engine
   pages/{home,station,camera,about}.js
@@ -103,19 +91,17 @@ assets/wallpapers/    dawn / morning / dusk / night
 
 ---
 
-## 🔒 Privacy
+## Privacy
 
-Camera frames are processed **only** in your browser and never stored or transmitted.
-The app ships no trackers. The single server component (`api/lta.js`) only forwards
-public bus-arrival requests.
+Camera frames are processed only in your browser, never stored or sent. No trackers. The one server piece (`api/lta.js`) just forwards public bus-arrival requests.
 
 ---
 
-## 📊 Data & credits
+## Data and credits
 
-- **LTA DataMall** — real-time bus arrivals & the official Load field
-- **data.gov.sg / NEA** — weather, rainfall, PM2.5, UV
-- **OneMap (SLA)** — place search & geocoding
-- **TensorFlow.js · COCO-SSD** — in-browser person detection
+- **LTA DataMall** - real-time arrivals + the official Load field
+- **data.gov.sg / NEA** - weather, rainfall, PM2.5, UV
+- **OneMap (SLA)** - place search + geocoding
+- **TensorFlow.js / COCO-SSD** - in-browser person detection
 
 Wallpapers: "Lile Waves Dynamic" set, used as time-of-day backgrounds.
